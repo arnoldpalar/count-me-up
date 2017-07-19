@@ -1,20 +1,24 @@
 package com.ap.countmeup.service;
 
 import com.ap.countmeup.dto.CountResponse;
+import com.ap.countmeup.repository.VoteRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
+import java.util.Set;
 
 @Service
 public class CountService {
-    private Environment env;
+    private VoteRepo voteRepo;
 
     @Autowired
-    public CountService(Environment env) {
-        this.env = env;
+    public CountService(VoteRepo voteRepo) {
+        this.voteRepo = voteRepo;
     }
 
-    public CountResponse getCount() {
+    public Map<Long, Long> getCount() {
+        Set<Long> candidates = voteRepo.getCandidates();
 
         return null;
     }
