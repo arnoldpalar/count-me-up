@@ -14,8 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -48,7 +48,7 @@ public class CountMeUpApplicationTests {
 			try {
 				voteService.vote(new VoteRequest(voterId, candidateId));
 			} catch (InvalidVoteException e) {
-				Set<Long> votes = voteRepo.getVotes(voterId);
+				List<Long> votes = voteRepo.getVotes(voterId);
 				Assert.assertTrue(votes != null && (votes.size() >= 3 || votes.contains(candidateId)));
 			}
 		}
@@ -64,21 +64,6 @@ public class CountMeUpApplicationTests {
 											.mapToLong(Long::longValue)
 											.sum()
 										== voteRepo.total());
-	}
-
-	@Test
-	public void cMeantToBeFailed() {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void dMeantToBeError() throws Exception {
-		throw new Exception("Error");
-	}
-
-	@Test
-	public void eMeantToBeSuccess() {
-		Assert.assertTrue(true);
 	}
 
 }

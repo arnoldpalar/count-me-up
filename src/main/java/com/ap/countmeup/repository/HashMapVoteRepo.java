@@ -6,13 +6,13 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class HashMapVoteRepo implements VoteRepo {
-    private static final Map<Long, Set<Long>> voters = Collections.synchronizedMap(new HashMap<>());
+    private static final Map<Long, List<Long>> voters = Collections.synchronizedMap(new HashMap<>());
     private static AtomicLong nofVotes = new AtomicLong(0);
     private static final Map<Long, AtomicLong> voteResult = Collections.synchronizedMap(new HashMap<>());
 
     @Override
     public void save(VoteRequest voteRequest) throws Exception {
-        Set<Long> votes = voters.getOrDefault(voteRequest.getVoterId(), Collections.synchronizedSet(new HashSet<>()));
+        List<Long> votes = voters.getOrDefault(voteRequest.getVoterId(), Collections.synchronizedList(new ArrayList<>()));
         votes.add(voteRequest.getCandidateId());
 
         voters.put(voteRequest.getVoterId(), votes);
@@ -20,7 +20,7 @@ public class HashMapVoteRepo implements VoteRepo {
     }
 
     @Override
-    public Set<Long> getVotes(Long voterId) {
+    public List<Long> getVotes(Long voterId) {
         return voters.get(voterId);
     }
 

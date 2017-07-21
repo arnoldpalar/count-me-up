@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
+import java.util.List;
 
 import static org.springframework.util.Assert.*;
 
@@ -24,7 +24,7 @@ public class VoteService {
     public void vote(VoteRequest voteRequest) throws Exception {
         notNull(voteRequest, "voteRequest cannot be null");
 
-        Set<Long> votes = voteRepo.getVotes(voteRequest.getVoterId());
+        List<Long> votes = voteRepo.getVotes(voteRequest.getVoterId());
 
         if(votes == null || (votes.size() < 3 && !votes.contains(voteRequest.getCandidateId()))) {
             this.castAndSave(voteRequest);
