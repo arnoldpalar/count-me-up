@@ -20,7 +20,7 @@ public class CountController {
         this.countService = countService;
     }
 
-    @RequestMapping(value = "/get", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<Long, Long>> getCount() {
         return ResponseEntity.ok(countService.count());
     }
